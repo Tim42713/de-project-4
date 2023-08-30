@@ -1,6 +1,6 @@
 Список полей и их сточников используемых для построения витрины:
-    courier_id — dds.dm_courier;
-    courier_name — dds.dm_courier;
+    - courier_id — dds.dm_courier;
+    - courier_name — dds.dm_courier;
     settlement_year — dds.dm_timestamp;
     settlement_month — dds.dm_timestamp;
     orders_count — dm_deliveries;
