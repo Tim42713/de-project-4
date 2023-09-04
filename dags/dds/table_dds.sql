@@ -17,15 +17,24 @@ CREATE TABLE IF NOT EXISTS dds.dm_couriers(
 CREATE TABLE IF NOT EXISTS dds.dm_deliveries(
 	id serial NOT NULL,
 	delivery_id varchar NOT NULL,
-	courier_id int NOT NULL,
 	order_id int NOT NULL,
+	courier_id int NOT NULL,
 	address varchar NOT NULL,
 	delivery_ts timestamp NOT NULL,
 	rate int4 NOT NULL,
-	tip_sum numeric(14,2) NOT NULL,
+	sum int NOT NULL,
+	tip_sum int NOT NULL,
 	CONSTRAINT dds_dm_deliveries_pkey PRIMARY KEY(id),
 	CONSTRAINT dds_dm_deliveries_index UNIQUE(delivery_id),
-	CONSTRAINT dds_dm_deliveries_check CHECK((tip_sum >= 0))
+	CONSTRAINT dds_dm_deliveries_check CHECK((tip_sum >= 0)),
+);
+
+CREATE TABLE dds.dm_settings (
+	id int4 NOT NULL GENERATED ALWAYS AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE),
+	workflow_key varchar NOT NULL,
+	workflow_settings json NOT NULL,
+	CONSTRAINT settings_pkey PRIMARY KEY (id),
+	CONSTRAINT settings_workflow_key_key UNIQUE (workflow_key)
 );
 
 ALTER TABLE dds.dm_deliveries ADD CONSTRAINT dm_deliveries_courier_fkey FOREIGN KEY (courier_id) REFERENCES dds.dm_couriers(id);
